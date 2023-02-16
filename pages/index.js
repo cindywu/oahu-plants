@@ -14,7 +14,14 @@ export default function Home(){
       pushURL: '/api/replicache-push',
       pullURL: '/api/replicache-pull',
       name: 'oahu-plants-user-id',
-      mutators: {},
+      mutators: {
+        async createPlant(tx, {id, createdBy, species}) {
+          await tx.put(`plant/${id}`, {
+            createdBy,
+            species,
+          });
+        },
+      },
       licenseKey : process.env.REPLICACHE_LICENSE_KEY
     })
     setRep(r)
